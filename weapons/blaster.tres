@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Weapon" format=3]
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://bs8y3ivk8vrqx"]
 
-[ext_resource type="Texture2D" path="res://sprites/crosshair.png" id="1"]
-[ext_resource type="Script" path="res://scripts/weapon.gd" id="2"]
-[ext_resource type="PackedScene" path="res://models/blaster.glb" id="3"]
+[ext_resource type="Texture2D" uid="uid://2jld33y6h5pq" path="res://sprites/crosshair.png" id="1"]
+[ext_resource type="Script" uid="uid://bfhy5rsv831og" path="res://scripts/weapon.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://b2p7bbkuxf7m" path="res://models/blaster.glb" id="3"]
+[ext_resource type="AudioStream" uid="uid://dkftljsbdhwng" path="res://sounds/blaster.ogg" id="4"]
 
 [resource]
 script = ExtResource("2")
@@ -10,8 +11,6 @@ model = ExtResource("3")
 rotation = Vector3(0, 180, 0)
 muzzle_position = Vector3(0.1, -0.4, 1.5)
 cooldown = 0.3
-damage = 25.0
-spread = 0
-shot_count = 1
 knockback = 30
+sound_shoot = ExtResource("4")
 crosshair = ExtResource("1")

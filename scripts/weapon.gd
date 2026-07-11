@@ -19,7 +19,7 @@ class_name Weapon
 @export var max_knockback: Vector2 = Vector2(0.0025, 0.002)
 
 @export_subgroup("Sounds")
-@export var sound_shoot: String
+@export var sound_shoot: AudioStream
 
 @export_subgroup("Crosshair")
 @export var crosshair: Texture2D

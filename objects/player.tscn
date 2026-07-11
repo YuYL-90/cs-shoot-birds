@@ -80,3 +80,5 @@ normal_fade = 0.5
 
 [node name="Cooldown" type="Timer" parent="." unique_id=52990621]
 one_shot = true
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]

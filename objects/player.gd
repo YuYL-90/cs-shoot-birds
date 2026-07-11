@@ -39,6 +39,7 @@ signal health_updated
 @onready var muzzle = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Muzzle
 @onready var container = $Head/Camera/SubViewportContainer/SubViewport/CameraItem/Container
 @onready var blaster_cooldown = $Cooldown
+@onready var shoot_sound = $ShootSound
 
 @export var crosshair_path: NodePath
 var crosshair: TextureRect
@@ -83,18 +84,20 @@ func _input(event):
 		input_mouse = event.relative / mouse_sensitivity
 		handle_rotation(event.relative.x, event.relative.y, false)
 
+func _unhandled_input(event):
+	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed:
+		if mouse_captured:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			mouse_captured = false
+			input_mouse = Vector2.ZERO
+			get_viewport().set_input_as_handled()
+		else:
+			get_tree().quit()
+
 func handle_controls(delta):
 	if Input.is_action_just_pressed("mouse_capture"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		mouse_captured = true
-	
-	if Input.is_action_just_pressed("mouse_capture_exit"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		mouse_captured = false
-		input_mouse = Vector2.ZERO
-	
-	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().quit()
 	
 	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
@@ -148,6 +151,10 @@ func action_shoot():
 		
 		blaster_cooldown.start(weapon.cooldown)
 		
+		if weapon.sound_shoot:
+			shoot_sound.stream = weapon.sound_shoot
+			shoot_sound.play()
+		
 		for n in weapon.shot_count:
 			raycast.target_position.x = randf_range(-weapon.spread, weapon.spread)
 			raycast.target_position.y = randf_range(-weapon.spread, weapon.spread)
@@ -170,7 +177,7 @@ func action_shoot():
 			
 			impact_instance.position = raycast.get_collision_point() + (raycast.get_collision_normal() / 10)
 			impact_instance.look_at(camera.global_transform.origin, Vector3.UP, true)
-		
+		 
 		var knockback = random_vec2(weapon.min_knockback, weapon.max_knockback)
 		container.position.z += 0.25
 		camera.rotation.x += knockback.x
