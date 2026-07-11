@@ -77,7 +77,8 @@ func _process(delta):
 	previously_floored = is_on_floor()
 	
 	if position.y < -10:
-		get_tree().reload_current_scene()
+		health = 0
+		health_updated.emit(0)
 
 func _input(event):
 	if event is InputEventMouseMotion and mouse_captured:
@@ -221,10 +222,9 @@ func change_weapon():
 
 func damage(amount):
 	health -= amount
-	health_updated.emit(health)
-	
 	if health < 0:
-		get_tree().reload_current_scene()
+		health = 0
+	health_updated.emit(health)
 
 static func random_vec2(_min: Vector2, _max: Vector2) -> Vector2:
 	var _sign = -1 if randi() % 2 == 0 else 1

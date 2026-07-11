@@ -1,8 +1,16 @@
 [gd_resource type="Environment" format=3]
 
+[ext_resource type="Texture2D" uid="uid://cb7sdk1i5rx04" path="res://sprites/skybox.png" id="1"]
+
+[sub_resource type="PanoramaSkyMaterial" id="1"]
+panorama = ExtResource("1")
+
+[sub_resource type="Sky" id="2"]
+sky_material = SubResource("1")
+
 [resource]
 background_mode = 2
-sky_custom_color = Color(0.3, 0.5, 0.8, 1)
+sky = SubResource("2")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.5

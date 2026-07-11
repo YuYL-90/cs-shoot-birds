@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal killed
+
 @export var player: Node3D
 @export var move_speed: float = 1.5
 
@@ -17,10 +19,15 @@ var destroyed := false
 var locked_on := false
 
 func _ready():
+	add_to_group("enemies")
 	base_y = position.y
 	pick_wander_target()
 	if not player:
 		player = get_tree().root.find_child("Player", true, false)
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud and hud.has_method("_on_enemy_killed"):
+		if not killed.is_connected(hud._on_enemy_killed):
+			killed.connect(hud._on_enemy_killed)
 
 func _physics_process(delta):
 	if destroyed:
@@ -31,8 +38,8 @@ func _physics_process(delta):
 	if locked_on:
 		if player:
 			self.look_at(player.global_position + Vector3(0, 0.5, 0), Vector3.UP, true)
-	elif velocity.length() > 0.1:
-		var look_pos = position + Vector3(velocity.x, 0, velocity.z).normalized()
+	elif Vector2(velocity.x, velocity.z).length() > 0.1:
+		var look_pos = position + Vector3(velocity.x, 0, velocity.z).normalized() * 10.0
 		self.look_at(look_pos, Vector3.UP, true)
 	
 	var dir = wander_target - position
@@ -64,6 +71,7 @@ func damage(amount):
 func destroy():
 	destroyed = true
 	destroy_sound.play()
+	killed.emit()
 	hide()
 	
 	var respawn_timer = Timer.new()

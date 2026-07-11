@@ -13,6 +13,20 @@ font = ExtResource("4")
 font_size = 36
 outline_size = 12
 outline_color = Color(0, 0, 0, 0.470588)
+bold = true
+
+[sub_resource type="LabelSettings" id="4"]
+font = ExtResource("4")
+font_size = 72
+outline_size = 16
+outline_color = Color(0, 0, 0, 0.470588)
+
+[sub_resource type="LabelSettings" id="5"]
+font = ExtResource("4")
+font_size = 33
+outline_size = 12
+outline_color = Color(0, 0, 0, 0.470588)
+bold = true
 
 [sub_resource type="BoxShape3D" id="2"]
 size = Vector3(0.2, 10, 10)
@@ -63,6 +77,57 @@ size_flags_vertical = 8
 text = "100%"
 label_settings = SubResource("1")
 vertical_alignment = 2
+
+[node name="KillCount" type="Label" parent="HUD"]
+offset_left = 800.0
+offset_top = 580.0
+offset_right = 1100.0
+offset_bottom = 625.0
+text = "击败: 0/3"
+label_settings = SubResource("5")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="Popup" type="ColorRect" parent="HUD"]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+process_mode = 3
+color = Color(0, 0, 0, 0.7)
+visible = false
+
+[node name="Message" type="Label" parent="HUD/Popup"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -60.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+text = ""
+label_settings = SubResource("4")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Restart" type="Button" parent="HUD/Popup"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 60.0
+offset_right = 100.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "再玩一次"
 
 [node name="Enemies" type="Node" parent="." unique_id=1527018276]
 
@@ -115,3 +180,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 7.5)
 shape = SubResource("3")
 
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
+[connection signal="pressed" from="HUD/Popup/Restart" to="HUD" method="_on_restart"]
