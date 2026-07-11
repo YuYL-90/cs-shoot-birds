@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bfbv52lwmjibd"]
+
+[ext_resource type="Script" uid="uid://bwgybvgry0l41" path="res://objects/player.gd" id="1"]
+[ext_resource type="Resource" path="res://weapons/blaster-repeater.tres" id="2"]
+[ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="3"]
+[ext_resource type="Script" uid="uid://bfhy5rsv831og" path="res://scripts/weapon.gd" id="4"]
+[ext_resource type="Resource" path="res://weapons/blaster.tres" id="5"]
+[ext_resource type="SpriteFrames" uid="uid://dbv3sy5qjatnl" path="res://sprites/burst_animation.tres" id="6"]
+[ext_resource type="Environment" path="res://scenes/main-environment.tres" id="7"]
+
+[sub_resource type="CapsuleShape3D" id="1"]
+radius = 0.3
+height = 1.0
+
+[node name="Player" type="CharacterBody3D" unique_id=1485755242]
+script = ExtResource("1")
+weapons = Array[ExtResource("4")]([ExtResource("5"), ExtResource("2")])
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=2123460482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+shape = SubResource("1")
+
+[node name="Head" type="Node3D" parent="." unique_id=1187942231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera" type="Camera3D" parent="Head" unique_id=543576356]
+cull_mask = 1048573
+current = true
+fov = 80.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera" unique_id=197350425]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer" unique_id=417451219]
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 1
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=1346297189]
+environment = ExtResource("7")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=1368694201]
+position = Vector3(1, -0.5, -1)
+energy = 8.0
+light_color = Color(1, 1, 1, 1)
+shadow_enabled = false
+
+[node name="CameraItem" type="Camera3D" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=1264413018]
+cull_mask = 1047554
+fov = 40.0
+
+[node name="Container" type="Node3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem" unique_id=1946089919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -1, -2.25)
+
+[node name="Muzzle" type="AnimatedSprite3D" parent="Head/Camera/SubViewportContainer/SubViewport/CameraItem" unique_id=869522642]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.75, -6)
+layers = 2
+sprite_frames = ExtResource("6")
+frame = 2
+
+[node name="RayCast" type="RayCast3D" parent="Head/Camera" unique_id=959227863]
+exclude_parent = false
+target_position = Vector3(0, 0, -10)
+collide_with_areas = true
+
+[node name="Shadow" type="Decal" parent="." unique_id=1060248494]
+transform = Transform3D(-0.9768666, 0, 0.21384966, 0, 1, 0, -0.21384966, 0, -0.9768666, 0, -0.9, 0)
+size = Vector3(1, 2, 1)
+texture_albedo = ExtResource("3")
+modulate = Color(1, 1, 1, 0.705882)
+normal_fade = 0.5
+
+[node name="Cooldown" type="Timer" parent="." unique_id=52990621]
+one_shot = true

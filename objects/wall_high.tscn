@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://models/wall-high.glb" id="1"]
+
+[sub_resource type="BoxShape3D" id="1"]
+size = Vector3(1.5, 1.7, 0.7)
+
+[node name="wall-high" instance=ExtResource("1")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="wall-high2" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall-high2/StaticBody3D" index="0"]
+shape = SubResource("1")

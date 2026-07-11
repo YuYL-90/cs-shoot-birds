@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://bobxatn2raiwg"]
+
+[ext_resource type="Environment" path="res://scenes/main-environment.tres" id="1"]
+[ext_resource type="PackedScene" uid="uid://bfbv52lwmjibd" path="res://objects/player.tscn" id="2"]
+[ext_resource type="Script" uid="uid://ltdm06haw34s" path="res://scenes/hud.gd" id="3"]
+[ext_resource type="FontFile" uid="uid://biqtga8moh7ah" path="res://fonts/lilita_one_regular.ttf" id="4"]
+[ext_resource type="PackedScene" path="res://objects/platform_large_grass.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/enemy.tscn" id="6"]
+[ext_resource type="Texture2D" uid="uid://2jld33y6h5pq" path="res://sprites/crosshair.png" id="7"]
+
+[sub_resource type="LabelSettings" id="1"]
+font = ExtResource("4")
+font_size = 36
+outline_size = 12
+outline_color = Color(0, 0, 0, 0.470588)
+
+[node name="Main" type="Node3D" unique_id=104125262]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=491398873]
+environment = ExtResource("1")
+
+[node name="Player" parent="." unique_id=267490734 instance=ExtResource("2")]
+transform = Transform3D(-0.9998311, 0, -0.018400252, 0, 1, 0, 0.018400252, 0, -0.9998311, -1.7648392, 1.5, -1.7295654)
+crosshair_path = NodePath("../HUD/Crosshair")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=605797629]
+transform = Transform3D(0.87758255, -0.22984886, 0.4207355, 0, 0.87758255, 0.47942555, -0.47942555, -0.4207355, 0.77015114, 0, 20, 0)
+shadow_enabled = true
+shadow_opacity = 0.75
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1835236834]
+script = ExtResource("3")
+
+[node name="Crosshair" type="TextureRect" parent="HUD" unique_id=1551199890]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("7")
+
+[node name="Health" type="Label" parent="HUD" unique_id=1051928519]
+offset_left = 48.0
+offset_top = 627.0
+offset_right = 138.0
+offset_bottom = 672.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "100%"
+label_settings = SubResource("1")
+vertical_alignment = 2
+
+[node name="Enemies" type="Node" parent="." unique_id=1527018276]
+
+[node name="enemy-flying" parent="Enemies" unique_id=126045024 instance=ExtResource("6")]
+transform = Transform3D(-0.33468994, 0, -0.37146014, 0, 0.5, 0, 0.37146014, 0, -0.33468994, 1.8483119, 0.5866276, 1.9139991)
+player = NodePath("../../Player")
+
+[node name="Level" type="Node" parent="." unique_id=2050376405]
+
+[node name="platform-large-grass" parent="Level" unique_id=480751354 instance=ExtResource("5")]
+
+[connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
