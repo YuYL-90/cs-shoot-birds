@@ -1,21 +1,21 @@
 [gd_scene format=3 uid="uid://bfbv52lwmjibd"]
 
 [ext_resource type="Script" uid="uid://bwgybvgry0l41" path="res://objects/player.gd" id="1"]
-[ext_resource type="Resource" path="res://weapons/blaster-repeater.tres" id="2"]
+[ext_resource type="Resource" uid="uid://85tqjbdjmhbl" path="res://weapons/blaster-repeater.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="3"]
 [ext_resource type="Script" uid="uid://bfhy5rsv831og" path="res://scripts/weapon.gd" id="4"]
-[ext_resource type="Resource" path="res://weapons/blaster.tres" id="5"]
+[ext_resource type="Resource" uid="uid://bs8y3ivk8vrqx" path="res://weapons/blaster.tres" id="5"]
 [ext_resource type="SpriteFrames" uid="uid://dbv3sy5qjatnl" path="res://sprites/burst_animation.tres" id="6"]
-[ext_resource type="Environment" path="res://scenes/main-environment.tres" id="7"]
+[ext_resource type="Environment" uid="uid://5n4kucea355x" path="res://scenes/main-environment.tres" id="7"]
 
 [sub_resource type="CapsuleShape3D" id="1"]
 radius = 0.3
 height = 1.0
 
 [node name="Player" type="CharacterBody3D" unique_id=1485755242]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
 script = ExtResource("1")
 weapons = Array[ExtResource("4")]([ExtResource("5"), ExtResource("2")])
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
 
 [node name="Collider" type="CollisionShape3D" parent="." unique_id=2123460482]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
@@ -48,10 +48,7 @@ render_target_update_mode = 4
 environment = ExtResource("7")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=1368694201]
-position = Vector3(1, -0.5, -1)
-energy = 8.0
-light_color = Color(1, 1, 1, 1)
-shadow_enabled = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.5, -1)
 
 [node name="CameraItem" type="Camera3D" parent="Head/Camera/SubViewportContainer/SubViewport" unique_id=1264413018]
 cull_mask = 1047554
@@ -81,4 +78,4 @@ normal_fade = 0.5
 [node name="Cooldown" type="Timer" parent="." unique_id=52990621]
 one_shot = true
 
-[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+[node name="ShootSound" type="AudioStreamPlayer" parent="." unique_id=385675845]

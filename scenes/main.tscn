@@ -1,24 +1,18 @@
 [gd_scene format=3 uid="uid://bobxatn2raiwg"]
 
-[ext_resource type="Environment" path="res://scenes/main-environment.tres" id="1"]
+[ext_resource type="Environment" uid="uid://5n4kucea355x" path="res://scenes/main-environment.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://bfbv52lwmjibd" path="res://objects/player.tscn" id="2"]
 [ext_resource type="Script" uid="uid://ltdm06haw34s" path="res://scenes/hud.gd" id="3"]
 [ext_resource type="FontFile" uid="uid://biqtga8moh7ah" path="res://fonts/lilita_one_regular.ttf" id="4"]
 [ext_resource type="PackedScene" path="res://objects/platform_large_grass.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://objects/enemy.tscn" id="6"]
 [ext_resource type="Texture2D" uid="uid://2jld33y6h5pq" path="res://sprites/crosshair.png" id="7"]
+[ext_resource type="PackedScene" uid="uid://bjoo6tn5vguin" path="res://objects/animal-beaver.tscn" id="8_tipki"]
 
 [sub_resource type="LabelSettings" id="1"]
 font = ExtResource("4")
 font_size = 36
 outline_size = 12
-outline_color = Color(0, 0, 0, 0.470588)
-bold = true
-
-[sub_resource type="LabelSettings" id="4"]
-font = ExtResource("4")
-font_size = 72
-outline_size = 16
 outline_color = Color(0, 0, 0, 0.470588)
 
 [sub_resource type="LabelSettings" id="5"]
@@ -26,7 +20,12 @@ font = ExtResource("4")
 font_size = 33
 outline_size = 12
 outline_color = Color(0, 0, 0, 0.470588)
-bold = true
+
+[sub_resource type="LabelSettings" id="4"]
+font = ExtResource("4")
+font_size = 72
+outline_size = 16
+outline_color = Color(0, 0, 0, 0.470588)
 
 [sub_resource type="BoxShape3D" id="2"]
 size = Vector3(0.2, 10, 10)
@@ -78,7 +77,7 @@ text = "100%"
 label_settings = SubResource("1")
 vertical_alignment = 2
 
-[node name="KillCount" type="Label" parent="HUD"]
+[node name="KillCount" type="Label" parent="HUD" unique_id=3493102]
 offset_left = 800.0
 offset_top = 580.0
 offset_right = 1100.0
@@ -88,18 +87,16 @@ label_settings = SubResource("5")
 horizontal_alignment = 2
 vertical_alignment = 2
 
-[node name="Popup" type="ColorRect" parent="HUD"]
+[node name="Popup" type="ColorRect" parent="HUD" unique_id=915183922]
+process_mode = 3
+visible = false
 anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-process_mode = 3
 color = Color(0, 0, 0, 0.7)
-visible = false
 
-[node name="Message" type="Label" parent="HUD/Popup"]
-anchors_preset = 8
+[node name="Message" type="Label" parent="HUD/Popup" unique_id=312309716]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -110,13 +107,12 @@ offset_right = 200.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-text = ""
 label_settings = SubResource("4")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Restart" type="Button" parent="HUD/Popup"]
-anchors_preset = 8
+[node name="Restart" type="Button" parent="HUD/Popup" unique_id=534744244]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -178,6 +174,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 7.5)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Level/Walls/WallTop" unique_id=1488152801]
 shape = SubResource("3")
+
+[node name="animal" type="Node" parent="." unique_id=1117889021]
+
+[node name="AnimalBeaver" parent="animal" unique_id=766334683 instance=ExtResource("8_tipki")]
+transform = Transform3D(0.59827673, 0, 0.8012896, 0, 1, 0, -0.8012896, 0, 0.59827673, -5.65235, 0.6552377, 0.73992586)
+top_level = true
 
 [connection signal="health_updated" from="Player" to="HUD" method="_on_health_updated"]
 [connection signal="pressed" from="HUD/Popup/Restart" to="HUD" method="_on_restart"]
